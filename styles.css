@@ -1,0 +1,14 @@
+.RPS {
+    width: 100px;
+    padding: 20px;
+}
+
+.container {
+    margin: 0 auto;
+    width: 430px;
+    display: none;
+}
+
+.container.active {
+    display: flex;
+}

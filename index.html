@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<script>
+
+    function add_class() {
+        document.getElementById("images").classList.toggle("active")
+        if (document.getElementById("btn").innerText == "show") {
+            document.getElementById("btn").innerText = "hide";
+        } else {
+            document.getElementById("btn").innerText = "show";
+        }
+    }
+
+</script>
+
+<div class="container" id="images">
+    <img class="RPS" src="images/rock.jpg">
+    <img class="RPS" src="images/paper.jpg">
+    <img class="RPS" src="images/scissors.png">
+</div>
+
+<button onclick="add_class()" id="btn">show</button>
+
+<form method="get" action="playing.php">
+    <label for="game_id"> Enter Game_ID</label>
+    <input type="text" name="game_id" id="game_id"> <br>
+</form>
+
+</body>
+</html>
