@@ -51,9 +51,11 @@ if (is_dir("current_games/" . $game_id)) {
         }
     }
 
+    const timer = ms => new Promise(res => setTimeout(res, ms))
 
     async function check_update() {
         let updated = false
+        let i = 1;
         while (!updated) {
             let response = await fetchResource('current_games/<?php echo $game_id;?>/status.txt');
             if (response) {
@@ -64,6 +66,7 @@ if (is_dir("current_games/" . $game_id)) {
                     updated = true;
                 }
             }
+            await timer(500)
         }
     }
 
