@@ -1,7 +1,9 @@
 .RPS {
-    width: 100px;
+    width: 50%;
     padding: 20px;
     display: none;
+    margin: 0 auto;
+    align-content: center;
 }
 
 .RPS.active {
@@ -10,8 +12,11 @@
 
 .container {
     margin: 0 auto;
-    width: 430px;
+    width: 200px;
+    height: fit-content;
     display: none;
+    align-items: center;
+    justify-content: center;
 }
 
 .container.active {

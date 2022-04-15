@@ -8,6 +8,7 @@ $game_id = $_GET["game_id"];
     <meta charset="UTF-8">
     <title>Game: <?php echo $game_id;?></title>
     <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
