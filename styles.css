@@ -1,6 +1,11 @@
 .RPS {
     width: 100px;
     padding: 20px;
+    display: none;
+}
+
+.RPS.active {
+    display: flex;
 }
 
 .container {
