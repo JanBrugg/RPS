@@ -12,9 +12,9 @@ $game_id = $_GET["game_id"];
 </head>
 <body>
 
-<h2 id="waiting_text">
+<p class="title" id="waiting_text">
     Waiting for opponent...
-</h2>
+</p>
 
 <script>
 <?php
@@ -79,6 +79,7 @@ if (is_dir("current_games/" . $game_id)) {
                     add_class();
                     updated = true;
                     document.getElementById("waiting_text").remove();
+                    document.getElementById("result").innerText = "";
                     continue;
                 }
             }
@@ -142,7 +143,7 @@ if (is_dir("current_games/" . $game_id)) {
         while (!updated) {
             let opponent_choice = await fetchResource(`current_games/${game_id}/p${opp}.txt`);
             const opp_selection = await opponent_choice.text();
-            if (opp_selection != "nothing") {
+            if (opp_selection !== "nothing") {
                 let winner;
                 if (player === 1) {
                     winner = check_winner(selection, opp_selection);
@@ -165,7 +166,7 @@ if (is_dir("current_games/" . $game_id)) {
                 continue;
             }
             console.log("waiting for opponent...");
-            await timer(500);
+            await timer(100);
         }
     }
 
@@ -218,7 +219,7 @@ if (is_dir("current_games/" . $game_id)) {
     <img class="RPS" id="questionmark" src="images/question_mark.jpg" alt="opponent">
 </div>
 
-<h3 id="result"></h3>
+<p id="result" class="title"><?php echo $game_id;?></p>
 
 </body>
 </html>

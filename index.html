@@ -4,34 +4,155 @@
     <meta charset="UTF-8">
     <title>Rock Paper Scissors</title>
     <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+
+        function create_game_id() {
+            // create id
+            // check if id already exists
+            // if no, create it
+            // else, repeat
+
+            const chars = ["a", "b", "c", "d", "1", "2", "3", "4"];
+
+            let id = "";
+            for (let i = 0; i < 10; i++) {
+                let num = Math.floor(Math.random() * chars.length);
+                id += chars[num];
+            }
+            console.log("Id in function: ", id);
+
+            check_if_exists(id);
+            return id;
+
+        }
+
+        async function check_if_exists(id) {
+            let response = await fetchResource('current_games/games.txt');
+            let text = await response.text();
+            console.log("File text: ", text);
+            let games = JSON.parse(text);
+            if (!games.includes(id)) {
+                games.push(id);
+                let new_array = array_to_string(games);
+                upload_ids(new_array);
+                return false;
+            } else {
+                create_game_id();
+            }
+        }
+
+        async function check_if_playing(id) {
+            let response = await fetchResource('current_games/games.txt');
+            let text = await response.text();
+            console.log("File text: ", text);
+            let games = JSON.parse(text);
+            console.log(games.includes(id));
+            return games.includes(id);
+
+        }
+
+        async function fetchResource(pathToResource) {
+            try {
+                const response = await fetch(pathToResource);
+                if (!response.ok) {
+                    throw Error(`${response.status} ${response.statusText}`);
+                }
+                return response;
+            } catch (error) {
+                console.log('Looks like there was a problem: ', error);
+            }
+        }
+
+        function array_to_string(arr) {
+            let str = '[';
+            arr.forEach( (item, index) => {
+                if (index + 1 !== arr.length) {
+                    str += '"' + item + '", ';
+                } else {
+                    str += '"' + item + '"';
+                }
+            })
+            str += ']';
+            return str
+        }
+
+        function upload_ids(content) {
+            let fileName = "games.txt";
+            const inpFile = new File([content], fileName, {
+                type: "text/plain",
+            });
+
+
+            const endpoint = "upload.php";
+            const formData = new FormData();
+
+            formData.append("inpFile", inpFile);
+
+            fetch(endpoint, {
+                method: "post",
+                body: formData
+            }).catch(console.error);
+        }
+
+    </script>
 </head>
 <body>
 
-<script>
+<p class="title" id="title">Rock, Paper, Scissors</p>
 
-    function add_class() {
-        document.getElementById("images").classList.toggle("active")
-        if (document.getElementById("btn").innerText == "show") {
-            document.getElementById("btn").innerText = "hide";
+<form id="createForm" method="get" action="playing.php">
+    <div class="create-button">
+        <button type="submit" name="create" id="create">Create Game</button>
+        <input type="hidden" name="game_id" id="game_id_create">
+    </div>
+
+    <br>
+</form>
+
+<form id="joinForm" method="get" action="playing.php">
+
+    <div class="join-button">
+    <button type="submit" name="join" id="join">Join Game</button>
+        <input type="text" name="game_id" id="game_id_join" placeholder="Enter Game ID" required> <br>
+    </div>
+</form>
+
+<script>
+    const createButton = document.getElementById("create");
+    const joinForm = document.getElementById("joinForm");
+
+    createButton.addEventListener("click", e => {
+        // e.preventDefault();
+
+        let game_id = create_game_id();
+        console.log("ID in eventListener:", game_id);
+        document.getElementById("game_id_create").setAttribute('value', game_id);
+
+        console.log("Create Game");
+    })
+
+    joinForm.addEventListener("submit", async e => {
+        e.preventDefault();
+
+        let field = document.getElementById("game_id_join");
+        let game_id = field.value;
+        let result = await check_if_playing(game_id)
+        console.log("fake code", game_id)
+
+        if (result) {
+            console.log("yes")
+            document.getElementById("joinForm").submit();
         } else {
-            document.getElementById("btn").innerText = "show";
+            console.log("no")
+            document.getElementById("title").innerText = "invalid game id"
         }
-    }
+
+        console.log("Join Game");
+    })
 
 </script>
-
-<div class="container" id="images">
-    <img class="RPS" src="images/rock.jpg">
-    <img class="RPS" src="images/paper.jpg">
-    <img class="RPS" src="images/scissors.png">
-</div>
-
-<button onclick="add_class()" id="btn">show</button>
-
-<form method="get" action="playing.php">
-    <label for="game_id"> Enter Game_ID</label>
-    <input type="text" name="game_id" id="game_id"> <br>
-</form>
 
 </body>
 </html>
