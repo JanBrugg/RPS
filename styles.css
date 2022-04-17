@@ -1,7 +1,17 @@
+.title {
+    font-size: 3em;
+    font-family: Calibri, sans-serif;
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+}
+
 .RPS {
-    width: 100px;
+    width: 50%;
     padding: 20px;
     display: none;
+    margin: 0 auto;
+    align-content: center;
 }
 
 .RPS.active {
@@ -10,10 +20,61 @@
 
 .container {
     margin: 0 auto;
-    width: 430px;
+    width: 200px;
+    height: fit-content;
     display: none;
+    align-items: center;
+    justify-content: center;
 }
 
 .container.active {
     display: flex;
+}
+
+.create-button {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.create-button button {
+    font-size: 2em;
+    padding: .25em;
+    border: .1em solid blue;
+    border-radius: .5em;
+    background: lightskyblue;
+    cursor: pointer;
+}
+
+.join-button {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    margin-top: 2em;
+}
+
+.join-button button {
+    font-size: 2em;
+    padding: .25em;
+    border: .1em solid #ff0000;
+    border-radius: .5em;
+    background: #ffa8b8;
+    cursor: pointer;
+    margin-bottom: .5em;
+}
+
+.join-button input[type="text"] {
+    top: 50%;
+    position: relative;
+    transform: translateY(-0.1em);
+    font-size: 1.5em;
+    padding: .25em;
+    border: .1em solid #000000;
+    border-radius: .25em;
+    width: 7em;
+}
+
+.join-button input[type="text"]::placeholder {
+    color: #ffdae0;
 }
